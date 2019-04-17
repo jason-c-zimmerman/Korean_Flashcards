@@ -9,6 +9,8 @@
 #	       taken from King/Yeon's Elementary Korean
 ######################################################
 
+# TODO: debug sound support for mobile
+
 import os
 import sys
 import random
@@ -23,8 +25,10 @@ def main():
 		usage()
 		sys.exit(2)
 	SCREENWIDTH = 80 
+	SYSTEM='unix'
 	if len(sys.argv) == 3 and sys.argv[2] == 'm':
 		SCREENWIDTH = 24
+		SYSTEM='android'
 	try:
 		os.system('clear')
 		os.system('stty -echo')
@@ -38,7 +42,10 @@ def main():
 		while keyin != 'q':
 			if keyin == 'p':
 				keyin = ''
-				playsound(card['audio_path'])
+				if SYSTEM == 'unix':
+					playsound(card['audio_path'])
+				elif SYSTEM == 'android':
+					os.system('play-audio ' + card['audio_path'])
 				keyin = readkey()
 			elif keyin == 'n' and answer == False:
 				answer = True
