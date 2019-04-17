@@ -15,13 +15,15 @@ import random
 from dictionary import dictionary
 from readchar import readkey
 import keyboard
-
-SCREENWIDTH = 80 
+#import getopt #TODO make the args opts
 
 def main():
-    if len(sys.argv) != 2:
+	if len(sys.argv) < 2 or len(sys.argv) > 3:
         usage()
-        quit()
+        sys.exit(2)
+	SCREENWIDTH = 80 
+	if len(sys.argv) > 3 and sys.argv[2] = 'm':
+		SCREENWIDTH=24
     os.system('clear')
     os.system('stty -echo')
     print('\n\n\n\033[1m' + 'Welcome to Korean Flashcards'.center(SCREENWIDTH) + '\033[0m\n\n\n\n\n') 
@@ -73,11 +75,11 @@ def get_rand_card():
         return (dictionary[int(sys.argv[1])-1])[rand_num]
     except:
         usage()
-        quit()
+        sys.exit(2)
         
 def usage():
-    print('Usage: flashcardsKtoE.py [Chapter No.]')
-    print('e.g.   flashcardsKtoE.py 7')
+    print('Usage: flashcardsKtoE.py CHAPTER# [m(obile)]')
+    print('e.g.   flashcardsKtoE.py 7 m')
     print('possible Chapter numbers: 1 2 all')
 
 if __name__ == "__main__":
