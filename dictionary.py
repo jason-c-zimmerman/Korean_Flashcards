@@ -329,7 +329,7 @@ dictionary = [[\
         'english':'Sorry I’m late.',\
         'explanation':'Explanation: 늦어서 I am late, and so . . . Because I am late, . . .',\
         'korean':'늦어서 죄송합니다.',\
-        'audio_path':'audio/chapter2/.mp3'\
+        'audio_path':'audio/chapter2/26.mp3'\
         },{\
         'english':'',\
         'explanation':'',\
