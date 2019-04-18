@@ -25,11 +25,9 @@ def main():
 		usage()
 		sys.exit(2)
 	SCRWID = 80 
-	SCRWIDK = 88 
 	SYSTEM='unix'
 	if len(sys.argv) == 3 and sys.argv[2] == 'm':
 		SCRWID = 24
-		SCRWIDK = 24
 		SYSTEM='android'
 	try:
 		os.system('clear')
@@ -55,7 +53,7 @@ def main():
 				answer = True
 				os.system('clear')
 				print('\n\n\n\n\n\n')
-				print(card['korean'].center(SCRWIDK))
+				print(card['korean'].center(SCRWID))
 				print('\n\n\n')
 				print(card['english'].center(SCRWID))
 				if card['explanation'] != '':
@@ -70,7 +68,7 @@ def main():
 				card = get_rand_card()
 				os.system('clear')
 				print('\n\n\n\n\n\n\n\n\n')
-				print(card['korean'].center(SCRWIDK))
+				print(card['korean'].center(SCRWID))
 				print('\n\n\n\n\n')
 				sys.stdout.write('p audio, n ans, q quit'.center(SCRWID))
 				sys.stdout.flush()
