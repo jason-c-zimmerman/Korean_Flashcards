@@ -32,6 +32,7 @@ def main():
 	try:
 		os.system('clear')
 		os.system('stty -echo')
+		os.system('tput civis')
 		print('\n\n\n\033[1m' + 'Welcome to Korean Flashcards'.center(SCRWID) + '\033[0m\n\n\n\n\n') 
 		sys.stdout.write('\033[5m' + 'Press any key to continue.'.center(SCRWID) + '\033[0m')
 		sys.stdout.flush()
@@ -80,6 +81,7 @@ def main():
 	except:
 		os.system('clear')
 		os.system('stty echo')
+		os.system('tput cnorm')
 		sys.exit(2)
 
 def get_rand_card():
