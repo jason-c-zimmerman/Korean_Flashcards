@@ -24,23 +24,26 @@ def main():
 	if len(sys.argv) < 2 or len(sys.argv) > 3:
 		usage()
 		sys.exit(2)
-	SCREENWIDTH = 80 
+	SCRWID = 80 
+	SCRWIDK = 88 
 	SYSTEM='unix'
 	if len(sys.argv) == 3 and sys.argv[2] == 'm':
-		SCREENWIDTH = 24
+		SCRWID = 24
+		SCRWIDK = 24
 		SYSTEM='android'
 	try:
 		os.system('clear')
 		os.system('stty -echo')
-		print('\n\n\n\033[1m' + 'Welcome to Korean Flashcards'.center(SCREENWIDTH) + '\033[0m\n\n\n\n\n') 
-		sys.stdout.write('\033[5m' + 'Press any key to continue.'.center(SCREENWIDTH) + '\033[0m')
+		print('\n\n\n\033[1m' + 'Welcome to Korean Flashcards'.center(SCRWID) + '\033[0m\n\n\n\n\n') 
+		sys.stdout.write('\033[5m' + 'Press any key to continue.'.center(SCRWID) + '\033[0m')
 		sys.stdout.flush()
 		readkey()
-		keyin = ''
+		keyin = 'n'
 		answer = True
 
 		while keyin != 'q':
 			if keyin == 'p':
+			# Play sound
 				keyin = ''
 				if SYSTEM == 'unix':
 					playsound(card['audio_path'])
@@ -48,28 +51,28 @@ def main():
 					os.system('play-audio ' + card['audio_path'])
 				keyin = readkey()
 			elif keyin == 'n' and not answer:
+			# Show answer
 				answer = True
 				os.system('clear')
 				print('\n\n\n\n\n\n')
-				print(card['korean'].center(SCREENWIDTH))
+				print(card['korean'].center(SCRWIDK))
 				print('\n\n\n')
-				print(card['english'].center(SCREENWIDTH))
+				print(card['english'].center(SCRWID))
 				if card['explanation'] != '':
-					print(card['explanation'].center(SCREENWIDTH))
+					print(card['explanation'].center(SCRWID))
 				print('\n\n\n\n\n')
-				sys.stdout.write('p audio, any, q quit'.center(SCREENWIDTH))
+				sys.stdout.write('p audio, n next, q quit'.center(SCRWID))
 				sys.stdout.flush()
 				keyin = readkey()
-				if keyin == 'n':
-					keyin = ''
-			elif answer:
+			elif keyin == 'n' and answer:
+			# Show next question
 				answer = False
 				card = get_rand_card()
 				os.system('clear')
 				print('\n\n\n\n\n\n\n\n\n')
-				print(card['korean'].center(SCREENWIDTH))
+				print(card['korean'].center(SCRWIDK))
 				print('\n\n\n\n\n')
-				sys.stdout.write('p audio, n ans, q quit'.center(SCREENWIDTH))
+				sys.stdout.write('p audio, n ans, q quit'.center(SCRWID))
 				sys.stdout.flush()
 				keyin = readkey()
 			else:
