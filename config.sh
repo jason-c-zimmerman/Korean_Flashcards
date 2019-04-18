@@ -27,3 +27,5 @@ fi
 pip install readchar
 pip install keyboard
 pip install playsound
+
+export PATH=$PATH:.

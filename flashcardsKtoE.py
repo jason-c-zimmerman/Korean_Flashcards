@@ -47,7 +47,7 @@ def main():
 				elif SYSTEM == 'android':
 					os.system('play-audio ' + card['audio_path'])
 				keyin = readkey()
-			elif keyin == 'n' and answer == False:
+			elif keyin == 'n' and not answer:
 				answer = True
 				os.system('clear')
 				print('\n\n\n\n\n\n')
@@ -62,7 +62,7 @@ def main():
 				keyin = readkey()
 				if keyin == 'n':
 					keyin = ''
-			elif answer == True: 
+			elif answer:
 				answer = False
 				card = get_rand_card()
 				os.system('clear')

@@ -40,7 +40,7 @@ def main():
 				keyin = ''
 				playsound(card['audio_path'])
 				keyin = readkey()
-			elif keyin == 'n' and answer == False:
+			elif keyin == 'n' and not answer# == False:
 				answer = True
 				os.system('clear')
 				print('\n\n\n\n\n\n')
@@ -55,7 +55,7 @@ def main():
 				keyin = readkey()
 				if keyin == 'n':
 					keyin = ''
-			elif answer == True: 
+			elif keyin == 'n' and answer# == True: 
 				answer = False
 				card = get_rand_card()
 				os.system('clear')
