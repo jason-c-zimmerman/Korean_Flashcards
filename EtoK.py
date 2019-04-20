@@ -25,29 +25,29 @@ locale.setlocale(locale.LC_ALL, '')
 stdscr = None
 
 def main(scr):
-	global stdscr
-	stdscr = scr
-	numlines = curses.LINES
-	numcols = curses.COLS
-	curses.curs_set(0)
-	stdscr.clear()
+    global stdscr
+    stdscr = scr
+    numlines = curses.LINES
+    numcols = curses.COLS
+    curses.curs_set(0)
+    stdscr.clear()
 
-	if len(sys.argv) < 2 or len(sys.argv) > 3:
-		usage()
-		sys.exit(2)
-	
-	SYSTEM='unix'
-	if len(sys.argv) == 3 and sys.argv[2] == 'm':
-		SYSTEM='android'
+    if len(sys.argv) < 2 or len(sys.argv) > 3:
+        usage()
+        sys.exit(2)
 
-	stdscr.addstr(int(numlines/2)-1, 0, 'Welcome to Korean Flashcards'.center(numcols), curses.A_BOLD) 
-	stdscr.addstr(int(numlines/2)+1, 0, 'Press any key to continue.'.center(numcols), curses.A_BLINK)
-	stdscr.getkey()
+    SYSTEM='unix'
+    if len(sys.argv) == 3 and sys.argv[2] == 'm':
+        SYSTEM='android'
 
-	keyin = 'n'
-	answer = True
+    stdscr.addstr(int(numlines/2)-1, 0, 'Welcome to Korean Flashcards'.center(numcols), curses.A_BOLD) 
+    stdscr.addstr(int(numlines/2)+1, 0, 'Press any key to continue.'.center(numcols), curses.A_BLINK)
+    stdscr.getkey()
 
-	while keyin != 'q':
+    keyin = 'n'
+    answer = True
+
+    while keyin != 'q':
         # Check if screen was re-sized
         resized = curses.is_term_resized(numlines, numcols)
         if resized:
@@ -56,38 +56,38 @@ def main(scr):
             curses.resizeterm(numlines, numcols)
             stdscr.refresh()
 
-		if keyin == 'p':
-		# Play sound
-			keyin = ''
-			if SYSTEM == 'unix':
-				playsound(card['audio_path'])
-			elif SYSTEM == 'android':
-				os.system('play-audio ' + card['audio_path'])
-			keyin = stdscr.getkey()
-		elif keyin == 'n' and not answer:
-		# Show answer
-			stdscr.clear()
-			stdscr.refresh()
-			answer = True
-			stdscr.addstr(int(numlines/2)-1, 0, card['english'].center(numcols))
-			stdscr.addstr(int(numlines/2)+1, 0, card['korean'].center(numcols))
-			if card['explanation'] != '':
-				stdscr.addstr(int(numlines/2)+1, 0, card['explanation'].center(numcols))
-			stdscr.addstr(numlines-2, 0, 'p audio, n next, q quit'.center(numcols))
-			keyin = stdscr.getkey()
-		elif keyin == 'n' and answer:
-		# Show next question
-			stdscr.clear()
-			stdscr.refresh()
-			answer = False
-			card = get_rand_card()
-			stdscr.addstr(int(numlines/2), 0, card['english'].center(numcols))
-			stdscr.addstr(numlines-2, 0, 'n ans, q quit'.center(numcols))
-			keyin = stdscr.getkey()
-			if keyin == 'p':
-				keyin = ''
-		else:
-			keyin = stdscr.getkey()
+        if keyin == 'p':
+        # Play sound
+            keyin = ''
+            if SYSTEM == 'unix':
+                playsound(card['audio_path'])
+            elif SYSTEM == 'android':
+                os.system('play-audio ' + card['audio_path'])
+            keyin = stdscr.getkey()
+        elif keyin == 'n' and not answer:
+        # Show answer
+            stdscr.clear()
+            stdscr.refresh()
+            answer = True
+            stdscr.addstr(int(numlines/2)-1, 0, card['english'].center(numcols))
+            stdscr.addstr(int(numlines/2)+1, 0, card['korean'].center(numcols))
+            if card['explanation'] != '':
+                stdscr.addstr(int(numlines/2)+1, 0, card['explanation'].center(numcols))
+            stdscr.addstr(numlines-2, 0, 'p audio, n next, q quit'.center(numcols))
+            keyin = stdscr.getkey()
+        elif keyin == 'n' and answer:
+        # Show next question
+            stdscr.clear()
+            stdscr.refresh()
+            answer = False
+            card = get_rand_card()
+            stdscr.addstr(int(numlines/2), 0, card['english'].center(numcols))
+            stdscr.addstr(numlines-2, 0, 'n ans, q quit'.center(numcols))
+            keyin = stdscr.getkey()
+            if keyin == 'p':
+                keyin = ''
+        else:
+            keyin = stdscr.getkey()
 
 
 def get_rand_card():
@@ -107,10 +107,10 @@ def get_rand_card():
         
 def usage():
 	stdscr.addstr(0,0,'Usage: flashcardsKtoE.py CHAPTER# [m(obile)]')
-	stdscr.addstr(0,0,'e.g.   flashcardsKtoE.py 1 m')
-	stdscr.addstr(0,0,'possible Chapter numbers: 1 2 all')
+	stdscr.addstr(1,0,'e.g.   flashcardsKtoE.py 1 m')
+	stdscr.addstr(2,0,'possible Chapter numbers: 1 2 all')
 	stdscr.refresh()
-	stdscr.getKey()
+	stdscr.getkey()
 
 if __name__ == "__main__":
     curses.wrapper(main)
