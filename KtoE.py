@@ -74,7 +74,7 @@ def main(scr):
             stdscr.addstr(int(numlines/2)-1, 0, card['korean'].center(numcols))
             stdscr.addstr(int(numlines/2)+1, 0, card['english'].center(numcols))
             if card['explanation'] != '':
-                stdscr.addstr(int(numlines/2)+1, 0, card['explanation'].center(numcols))
+                stdscr.addstr(int(numlines/2)+2, 0, card['explanation'].center(numcols))
             stdscr.addstr(numlines-2, 0, 'p audio, n next, q quit'.center(numcols))
             keyin = stdscr.getkey()
         elif keyin == 'n' and answer:
