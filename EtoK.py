@@ -48,6 +48,13 @@ def main(scr):
 	answer = True
 
 	while keyin != 'q':
+        # Check if screen was re-sized
+        resized = curses.is_term_resized(y, x)
+        if resized:
+            numlines, numcols = stdscr.getmaxyx()
+            stdscr.clear()
+            curses.resizeterm(numlines, numcols)
+            stdscr.refresh()
 
 		if keyin == 'p':
 		# Play sound
