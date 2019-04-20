@@ -4,11 +4,22 @@
 # testdriver.py: a script for running external tests
 ####################################################
 
-import random
-from dictionary import dictionary
+from curses import wrapper
+import time
 
-while True:
-	rand_card = random.randint(0,len(dictionary[0])-1)
-	card = (dictionary[0])[rand_card]
-	#if "Is that so?" in card:
-	print dictionary[0][rand_card]['english']
+def main(stdscr):
+    # Clear screen
+    stdscr.clear()
+
+    # This raises ZeroDivisionError when i == 10.
+    for i in range(0, 11):
+		v = i-10
+		stdscr.addstr(i, 0, '10 times by {} is {}'.format(v, 10*v))
+		#time.sleep(3)
+
+    stdscr.refresh()
+    stdscr.getkey()
+
+print "before wrapper"
+wrapper(main)
+print "after wrapper"
