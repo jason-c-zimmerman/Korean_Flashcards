@@ -40,7 +40,7 @@ def main(scr):
 	if len(sys.argv) == 3 and sys.argv[2] == 'm':
 		SYSTEM='android'
 
-	stdscr.addstr(numlines/2-1, 0, 'Welcome to Korean Flashcards'.center(numcols), curses.A_BOLD)
+	stdscr.addstr(int(numlines/2-1), 0, 'Welcome to Korean Flashcards'.center(numcols), curses.A_BOLD)
 	stdscr.addstr(numlines/2+1, 0, 'Press any key to continue.'.center(numcols), curses.A_BLINK)
 	stdscr.getkey()
 
