@@ -40,8 +40,8 @@ def main(scr):
 	if len(sys.argv) == 3 and sys.argv[2] == 'm':
 		SYSTEM='android'
 
-	stdscr.addstr(int(numlines/2-1), 0, 'Welcome to Korean Flashcards'.center(numcols), curses.A_BOLD)
-	stdscr.addstr(numlines/2+1, 0, 'Press any key to continue.'.center(numcols), curses.A_BLINK)
+	stdscr.addstr(int(numlines/2)-1, 0, 'Welcome to Korean Flashcards'.center(numcols), curses.A_BOLD)
+	stdscr.addstr(int(numlines/2)+1, 0, 'Press any key to continue.'.center(numcols), curses.A_BLINK)
 	stdscr.getkey()
 
 	keyin = 'n'
@@ -65,10 +65,10 @@ def main(scr):
 			stdscr.clear()
 			stdscr.refresh()
 			answer = True
-			stdscr.addstr(numlines/2-1, 0, card['korean'].center(numcols))
-			stdscr.addstr(numlines/2+1, 0, card['english'].center(numcols))
+			stdscr.addstr(int(numlines/2)-1, 0, card['korean'].center(numcols))
+			stdscr.addstr(int(numlines/2)+1, 0, card['english'].center(numcols))
 			if card['explanation'] != '':
-				stdscr.addstr(numlines/2+1, 0, card['explanation'].center(numcols))
+				stdscr.addstr(int(numlines/2)+1, 0, card['explanation'].center(numcols))
 			stdscr.addstr(numlines-2, 0, 'p audio, n next, q quit'.center(numcols))
 			keyin = stdscr.getkey()
 		elif keyin == 'n' and answer:
@@ -77,7 +77,7 @@ def main(scr):
 			stdscr.refresh()
 			answer = False
 			card = get_rand_card()
-			stdscr.addstr(numlines/2, 0, card['korean'].center(numcols))
+			stdscr.addstr(int(numlines/2), 0, card['korean'].center(numcols))
 			stdscr.addstr(numlines-2, 0, 'p audio, n ans, q quit'.center(numcols))
 			keyin = stdscr.getkey()
 		else:
