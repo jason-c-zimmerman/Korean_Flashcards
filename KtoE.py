@@ -52,7 +52,7 @@ def main(scr):
 
 	while keyin != 'q':
         # Check if screen was re-sized
-        resized = curses.is_term_resized(y, x)
+        resized = curses.is_term_resized(numlines, numcols)
         if resized:
             numlines, numcols = stdscr.getmaxyx()
             stdscr.clear()
