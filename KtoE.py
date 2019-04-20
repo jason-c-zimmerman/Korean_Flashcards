@@ -21,6 +21,8 @@ import curses
 import locale
 
 locale.setlocale(locale.LC_ALL, '')
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 stdscr = None
 
@@ -47,9 +49,6 @@ def main(scr):
     keyin = 'n'
     answer = True
 
-    stdscr.clear()
-    stdscr.refresh()
-
     while keyin != 'q':
         resized = curses.is_term_resized(numlines, numcols)
         if resized:
@@ -71,11 +70,11 @@ def main(scr):
             stdscr.clear()
             stdscr.refresh()
             answer = True
-            stdscr.addstr(int(numlines/2)-2, 0, card['korean'].center(numcols))
-            stdscr.addstr(int(numlines/2)+1, 0, card['english'].center(numcols))
+            stdscr.addstr(int(numlines/2)-2, 0, pad_string(card['korean'], numcols))
+            stdscr.addstr(int(numlines/2)+1, 0, pad_string(card['english'], numcols))
             if card['explanation'] != '':
-                stdscr.addstr(int(numlines/2)+2, 0, card['explanation'].center(numcols))
-            stdscr.addstr(numlines-2, 0, 'p audio, n next, q quit'.center(numcols))
+                stdscr.addstr(int(numlines/2)+2, 0, pad_string(card['explanation'], numcols))
+            stdscr.addstr(numlines-2, 0, pad_string('p audio, n next, q quit', numcols))
             keyin = stdscr.getkey()
         elif keyin == 'n' and answer:
         # Show next question
@@ -83,11 +82,30 @@ def main(scr):
             stdscr.refresh()
             answer = False
             card = get_rand_card()
-            stdscr.addstr(int(numlines/2), 0, card['korean'].center(numcols))
-            stdscr.addstr(numlines-2, 0, 'p audio, n ans, q quit'.center(numcols))
+            stdscr.addstr(int(numlines/2), 0, pad_string(card['korean'], numcols))
+            stdscr.addstr(numlines-2, 0, pad_string('p audio, n ans, q quit', numcols))
             keyin = stdscr.getkey()
         else:
             keyin = stdscr.getkey()
+
+def pad_string(string, numcols):
+    # Pad string text with appropriate spaces
+    len_string = len(string)
+    if numcols % 2 == 0:
+        if len_string % 2 == 0:
+            for i in range((numcols-len_string)/2): string = u'\u2001' + string 
+            for i in range((numcols-len_string)/2): string = string + u'\u2001' 
+        else: # len_string % 2 == 1
+            for i in range((numcols-len_string)/2): string = u'\u2001' + string
+            for i in range((numcols-len_string)/2+1): string = string + u'\u2001' 
+    else: # numcols % 2 == 1
+        if len_string % 2 == 0:
+            for i in range((numcols-len_string)/2): string = u'\u2001' + string
+            for i in range((numcols-len_string)/2+1): string = string + u'\u2001'
+        else: # len_string % 2 == 1 
+            for i in range((numcols-len_string)/2+1): string = u'\u2001' + string
+            for i in range((numcols-len_string)/2+1): string = string + u'\u2001'
+    return string
 
 
 def get_rand_card():
@@ -106,11 +124,11 @@ def get_rand_card():
 		sys.exit(2)
         
 def usage():
-	stdscr.addstr(0,0,'usage: flashcardsktoe.py chapter# [m(obile)]')
+	stdscr.addstr(0,0,'usage: flashcardsKtoE.py CHAPTER# [m(obile)]')
 	stdscr.addstr(1,0,'e.g.   flashcardsKtoE.py 1 m')
 	stdscr.addstr(2,0,'possible Chapter numbers: 1 2 all')
 	stdscr.refresh()
 	stdscr.getkey()
 
 if __name__ == "__main__":
-	curses.wrapper(main)
+    curses.wrapper(main)
