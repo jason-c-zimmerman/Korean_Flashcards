@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 ######################################################
-# Title: KtoE.py
+# Title: Quiz:.py
 # Author: Jason C Zimmerman
 # Date: 4/16/19
 # Description: A simple flashcard program with a dictionary
@@ -42,7 +42,7 @@ def main(scr):
     if len(sys.argv) == 3 and sys.argv[2] == 'm':
         SYSTEM='android'
 
-    stdscr.addstr(int(numlines/2)-2, 0, 'Welcome to Korean Flashcards'.center(numcols), curses.A_BOLD)
+    stdscr.addstr(int(numlines/2)-2, 0, 'Welcome to Korean Quiz'.center(numcols), curses.A_BOLD) 
     stdscr.addstr(int(numlines/2)+1, 0, 'Press any key to continue.'.center(numcols), curses.A_BLINK)
     stdscr.getkey()
 
@@ -50,6 +50,7 @@ def main(scr):
     answer = True
 
     while keyin != 'q':
+        # Check if screen was re-sized
         resized = curses.is_term_resized(numlines, numcols)
         if resized:
             numlines, numcols = stdscr.getmaxyx()
@@ -57,6 +58,7 @@ def main(scr):
             curses.resizeterm(numlines, numcols)
             stdscr.refresh()
 
+        str_in = ''
         if keyin == 'p':
         # Play sound
             keyin = ''
@@ -70,8 +72,8 @@ def main(scr):
             stdscr.clear()
             stdscr.refresh()
             answer = True
-            stdscr.addstr(int(numlines/2)-2, 0, pad_string(card['korean'], numcols))
-            stdscr.addstr(int(numlines/2)+1, 0, pad_string(card['english'], numcols))
+            stdscr.addstr(int(numlines/2)-2, 0, pad_string(card['english'], numcols))
+            stdscr.addstr(int(numlines/2)+1, 0, pad_string(card['korean'], numcols))
             if card['explanation'] != '':
                 stdscr.addstr(int(numlines/2)+3, 0, pad_string(card['explanation'], numcols))
             stdscr.addstr(numlines-2, 0, pad_string('p audio, n next, q quit', numcols))
@@ -82,9 +84,26 @@ def main(scr):
             stdscr.refresh()
             answer = False
             card = get_rand_card()
-            stdscr.addstr(int(numlines/2), 0, pad_string(card['korean'], numcols))
-            stdscr.addstr(numlines-2, 0, pad_string('p audio, n ans, q quit', numcols))
-            keyin = stdscr.getkey()
+            stdscr.addstr(int(numlines/2)-2, 0, pad_string(card['english'], numcols))
+            stdscr.addstr(int(numlines/2)+2, 0, pad_string('Answer: ' + " ".ljust(len(card['korean'])), numcols))
+            curses.echo()
+            curses.curs_set(1)
+            stdscr.move(int(numlines/2)+2, (numcols - len('Answer: ') - len(card['korean'])) / 2 + 1 + len('Answer: '))
+            curses.doupdate()
+            str_in = stdscr.getstr()
+            curses.noecho()
+            curses.curs_set(0) 
+
+
+            #for i in range((numcols-len_string)/2+1): string = string + u'\u2001' 
+
+
+
+
+
+            #keyin = stdscr.getkey()
+            #if str_in == 'p':
+            #keyin = 'n'
         else:
             keyin = stdscr.getkey()
 
@@ -124,7 +143,7 @@ def get_rand_card():
 		sys.exit(2)
         
 def usage():
-	stdscr.addstr(0,0,'usage: flashcardsKtoE.py CHAPTER# [m(obile)]')
+	stdscr.addstr(0,0,'Usage: flashcardsKtoE.py CHAPTER# [m(obile)]')
 	stdscr.addstr(1,0,'e.g.   flashcardsKtoE.py 1 m')
 	stdscr.addstr(2,0,'possible Chapter numbers: 1 2 all')
 	stdscr.refresh()

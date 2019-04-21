@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 ######################################################
-# Title: Korean_Flashcards.py
+# Title: EtoK.py
 # Author: Jason C Zimmerman
 # Date: 4/16/19
 # Description: A simple flashcard program with a dictionary
