@@ -47,7 +47,7 @@ def main(scr):
     stdscr.getkey()
 
     keyin = 'n'
-    answer = True
+    answer = False
 
     while keyin != 'q':
         resized = curses.is_term_resized(numlines, numcols)
@@ -65,22 +65,22 @@ def main(scr):
             elif SYSTEM == 'android':
                 os.system('play-audio ' + card['audio_path'])
             keyin = stdscr.getkey()
-        elif keyin == 'n' and not answer:
+        elif keyin == 'n' and answer:
         # Show answer
             stdscr.clear()
             stdscr.refresh()
-            answer = True
+            answer = False
             stdscr.addstr(int(numlines/2)-2, 0, pad_string(card['korean'], numcols))
             stdscr.addstr(int(numlines/2)+1, 0, pad_string(card['english'], numcols))
             if card['explanation'] != '':
                 stdscr.addstr(int(numlines/2)+3, 0, pad_string(card['explanation'], numcols))
             stdscr.addstr(numlines-2, 0, pad_string('p audio, n next, q quit', numcols))
             keyin = stdscr.getkey()
-        elif keyin == 'n' and answer:
+        elif keyin == 'n' and not answer:
         # Show next question
             stdscr.clear()
             stdscr.refresh()
-            answer = False
+            answer = True
             card = get_rand_card()
             stdscr.addstr(int(numlines/2), 0, pad_string(card['korean'], numcols))
             stdscr.addstr(numlines-2, 0, pad_string('p audio, n ans, q quit', numcols))
