@@ -38,9 +38,9 @@ def main(scr):
         usage()
         sys.exit(2)
 
-    SYSTEM='unix'
+    system='unix'
     if len(sys.argv) == 3 and sys.argv[2] == 'm':
-        SYSTEM='android'
+        system='android'
 
     stdscr.addstr(int(numlines/2)-2, 0, 'Welcome to Korean Flashcards'.center(numcols), curses.A_BOLD)
     stdscr.addstr(int(numlines/2)+1, 0, 'Press any key to continue.'.center(numcols), curses.A_BLINK)
@@ -60,9 +60,9 @@ def main(scr):
         if keyin == 'p':
         # Play sound
             keyin = ''
-            if SYSTEM == 'unix':
+            if system == 'unix':
                 playsound(card['audio_path'])
-            elif SYSTEM == 'android':
+            elif system == 'android':
                 os.system('play-audio ' + card['audio_path'])
             keyin = stdscr.getkey()
         elif keyin == 'n' and answer:
