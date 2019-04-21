@@ -99,18 +99,18 @@ def pad_string(string, numcols):
     len_string = len(string)
     if numcols % 2 == 0:
         if len_string % 2 == 0:
-            for i in range((numcols-len_string)/2): string = u'\u2001' + string 
-            for i in range((numcols-len_string)/2): string = string + u'\u2001' 
+            for i in range(int((numcols-len_string)/2)): string = u'\u2001' + string 
+            for i in range(int((numcols-len_string)/2)): string = string + u'\u2001' 
         else: # len_string % 2 == 1
-            for i in range((numcols-len_string)/2): string = u'\u2001' + string
-            for i in range((numcols-len_string)/2+1): string = string + u'\u2001' 
+            for i in range(int((numcols-len_string)/2)): string = u'\u2001' + string
+            for i in range(int((numcols-len_string)/2+1)): string = string + u'\u2001' 
     else: # numcols % 2 == 1
         if len_string % 2 == 0:
-            for i in range((numcols-len_string)/2): string = u'\u2001' + string
-            for i in range((numcols-len_string)/2+1): string = string + u'\u2001'
+            for i in range(int((numcols-len_string)/2)): string = u'\u2001' + string
+            for i in range(int((numcols-len_string)/2+1)): string = string + u'\u2001'
         else: # len_string % 2 == 1 
-            for i in range((numcols-len_string)/2+1): string = u'\u2001' + string
-            for i in range((numcols-len_string)/2+1): string = string + u'\u2001'
+            for i in range(int((numcols-len_string)/2+1)): string = u'\u2001' + string
+            for i in range(int((numcols-len_string)/2+1)): string = string + u'\u2001'
     return string
 
 
