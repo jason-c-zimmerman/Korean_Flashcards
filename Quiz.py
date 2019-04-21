@@ -74,11 +74,11 @@ def main(scr):
 			stdscr.clear()
 			stdscr.refresh()
 			answer = False
-			stdscr.addstr(int(numlines/2)-2, 0, pad_string(card['english'], numcols))
+			stdscr.addstr(int(numlines/2)-2, 0, card['english'].center(numcols))
 			curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
-			stdscr.addstr(int(numlines/2)+1, 0, pad_string(card['korean'], numcols), curses.color_pair(1) | curses.A_BOLD)
-			stdscr.addstr(int(numlines/2)+3, 0, pad_string(str_in, numcols))
-			stdscr.addstr(numlines-2, 0, pad_string('Were you correct? (y/n): ', numcols))
+			stdscr.addstr(int(numlines/2)+1, 0, card['korean'].center(numcols), curses.color_pair(1) | curses.A_BOLD)
+			stdscr.addstr(int(numlines/2)+3, 0, str_in.center(numcols))
+			stdscr.addstr(numlines-2, 0, 'Were you correct? (y/n): '.center(numcols))
 			while keyin != r'[yn]':# or keyin != 'n':
 				keyin = stdscr.getkey()	
 				if keyin == 'y':
@@ -88,7 +88,7 @@ def main(scr):
 				if keyin == 'n':
 					counter += 1
 					break
-			stdscr.addstr(numlines-2, 0, pad_string('p audio, q quit, any next', numcols))
+			stdscr.addstr(numlines-2, 0, 'p audio, q quit, any next'.center(numcols))
 			keyin = stdscr.getkey()
 		elif not answer:
 		# Show next question
@@ -96,9 +96,9 @@ def main(scr):
 			stdscr.refresh()
 			answer = True
 			card = get_rand_card()
-			stdscr.addstr(int(numlines/2)-2, 0, pad_string(card['english'], numcols))
-			stdscr.addstr(int(numlines/2)-6, 0, pad_string('Question Number ' + str(counter + 1), numcols))
-			stdscr.addstr(int(numlines/2)+1, 0, pad_string('Answer: ' + " ".ljust(len(card['korean'])), numcols))
+			stdscr.addstr(int(numlines/2)-2, 0, card['english'].center(numcols))
+			stdscr.addstr(int(numlines/2)-6, 0, ('Question Number ' + str(counter + 1)).center(numcols))
+			stdscr.addstr(int(numlines/2)+1, 0, ('Answer: ' + " ".ljust(len(card['korean']))).center(numcols))
 			curses.echo()
 			curses.curs_set(1)
 			stdscr.move(int(numlines/2)+1, (numcols - len('Answer: ') - len(card['korean'])) / 2 + len('Answer: '))
@@ -113,28 +113,28 @@ def main(scr):
 	stdscr.refresh()
 	message1 = 'You got ' + str(correct) + ' out of ' + str(counter) + ' correct.'
 	message2 = str(int(float(correct)/counter*100)) + '%'
-	stdscr.addstr(int(numlines/2)-1, 0, pad_string(message1, numcols))
-	stdscr.addstr(int(numlines/2)+1, 0, pad_string(message2, numcols))
+	stdscr.addstr(int(numlines/2)-1, 0, message1.center(numcols))
+	stdscr.addstr(int(numlines/2)+1, 0, message2.center(numcols))
 	stdscr.getkey()
 
-def pad_string(string, numcols):
-    # Pad string text with appropriate spaces
-    len_string = len(string)
-    if numcols % 2 == 0:
-        if len_string % 2 == 0:
-            for i in range((numcols-len_string)/2): string = u'\u2001' + string 
-            for i in range((numcols-len_string)/2): string = string + u'\u2001' 
-        else: # len_string % 2 == 1
-            for i in range((numcols-len_string)/2): string = u'\u2001' + string
-            for i in range((numcols-len_string)/2+1): string = string + u'\u2001' 
-    else: # numcols % 2 == 1
-        if len_string % 2 == 0:
-            for i in range((numcols-len_string)/2): string = u'\u2001' + string
-            for i in range((numcols-len_string)/2+1): string = string + u'\u2001'
-        else: # len_string % 2 == 1 
-            for i in range((numcols-len_string)/2+1): string = u'\u2001' + string
-            for i in range((numcols-len_string)/2+1): string = string + u'\u2001'
-    return string
+#def pad_string(string, numcols):
+#    # Pad string text with appropriate spaces
+#    len_string = len(string)
+#    if numcols % 2 == 0:
+#        if len_string % 2 == 0:
+#            for i in range((numcols-len_string)/2): string = u'\u2001' + string 
+#            for i in range((numcols-len_string)/2): string = string + u'\u2001' 
+#        else: # len_string % 2 == 1
+#            for i in range((numcols-len_string)/2): string = u'\u2001' + string
+#            for i in range((numcols-len_string)/2+1): string = string + u'\u2001' 
+#    else: # numcols % 2 == 1
+#        if len_string % 2 == 0:
+#            for i in range((numcols-len_string)/2): string = u'\u2001' + string
+#            for i in range((numcols-len_string)/2+1): string = string + u'\u2001'
+#        else: # len_string % 2 == 1 
+#            for i in range((numcols-len_string)/2+1): string = u'\u2001' + string
+#            for i in range((numcols-len_string)/2+1): string = string + u'\u2001'
+#    return string
 
 
 def get_rand_card():
