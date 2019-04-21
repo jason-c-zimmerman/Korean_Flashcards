@@ -21,8 +21,12 @@ import curses
 import locale
 
 locale.setlocale(locale.LC_ALL, '')
-reload(sys)
-sys.setdefaultencoding('utf8')
+# try block is for cross-platform functionality
+try:
+	reload(sys)
+	sys.setdefaultencoding('utf8')
+except:
+	pass
 
 stdscr = None
 
