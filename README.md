@@ -8,3 +8,4 @@ feature ideas:
 play sound asynchronously
 implement getopts
 add color and graphics
+add option to iterate over dictionary items in order (rather than random)
