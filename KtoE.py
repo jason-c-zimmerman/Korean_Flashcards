@@ -75,7 +75,7 @@ def main(scr):
             stdscr.clear()
             stdscr.refresh()
             answer = False
-            stdscr.addstr(int(numlines/2)-2, 0, str(len(deck)))#card['korean'].center(numcols))
+            stdscr.addstr(int(numlines/2)-2, 0, card['korean'].center(numcols))
             stdscr.addstr(int(numlines/2)+1, 0, card['english'].center(numcols))
             if card['explanation'] != '':
                 stdscr.addstr(int(numlines/2)+3, 0, card['explanation'].center(numcols))
