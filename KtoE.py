@@ -52,6 +52,7 @@ def main(scr):
 
     keyin = 'n'
     answer = False
+    deck = []
 
     while keyin != 'q':
         resized = curses.is_term_resized(numlines, numcols)
@@ -74,7 +75,7 @@ def main(scr):
             stdscr.clear()
             stdscr.refresh()
             answer = False
-            stdscr.addstr(int(numlines/2)-2, 0, card['korean'].center(numcols))
+            stdscr.addstr(int(numlines/2)-2, 0, str(len(deck)))#card['korean'].center(numcols))
             stdscr.addstr(int(numlines/2)+1, 0, card['english'].center(numcols))
             if card['explanation'] != '':
                 stdscr.addstr(int(numlines/2)+3, 0, card['explanation'].center(numcols))
@@ -85,12 +86,14 @@ def main(scr):
             stdscr.clear()
             stdscr.refresh()
             answer = True
-            card = get_rand_card()
+            deck = get_rand_card(deck)
+            card = deck.pop(0)
             stdscr.addstr(int(numlines/2), 0, card['korean'].center(numcols))
             stdscr.addstr(numlines-2, 0, 'p audio, n ans, q quit'.center(numcols))
             keyin = stdscr.getkey()
         else:
             keyin = stdscr.getkey()
+		
 
 #def pad_string(string, numcols):
 #    # Pad string text with appropriate spaces
@@ -113,28 +116,22 @@ def main(scr):
 
 
 def get_rand_card(deck):
-    if deck == None:
-    try:
-        if sys.argv[1] == 'all':
-            for d in dictionary:
-                deck += d
-        else:
-            deck = dictionary[int(sys.argv[1])-1]
-    except:
-        usage()
-        sys.exit(2)
-        
-    idx = random.randint(0,(len(deck))-1)
-    card = deck[idx]
-    deck.remove(card)
-    #if sys.argv[1] == 'all':
-    #    rand_chap= random.randint(0,len(dictionary)-1)
-    #    rand_card = random.randint(0,len(dictionary[rand_chap])-1)
-        #return (dictionary[rand_chap])[rand_card]
-    #else:
-        #chap = int(sys.argv[1])-1
-        #rand_card = random.randint(0,len(dictionary[chap])-1)
-        #return (dictionary[chap])[rand_card]
+	if len(deck) == 0:
+		try:
+		    if sys.argv[1] == 'all':
+			    for d in dictionary:
+				    deck += d
+		    else:
+			    deck = list(dictionary[int(sys.argv[1])-1])
+		except:
+			usage()
+			sys.exit(2)
+		
+	idx = random.randint(0,(len(deck))-1)
+	card = deck[idx]
+	deck.remove(card)
+	deck.insert(0,card)
+	return deck
         
 def usage():
 	stdscr.addstr(0,0,'usage: flashcardsKtoE.py CHAPTER# [m(obile)]')

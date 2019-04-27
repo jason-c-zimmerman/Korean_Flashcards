@@ -51,6 +51,7 @@ def main(scr):
 
     keyin = 'n'
     answer = False
+    deck = []
 
     while keyin != 'q':
         # Check if screen was re-sized
@@ -85,7 +86,8 @@ def main(scr):
             stdscr.clear()
             stdscr.refresh()
             answer = True
-            card = get_rand_card()
+            deck = get_rand_card(deck)
+            card = deck.pop(0)
             stdscr.addstr(int(numlines/2), 0, card['english'].center(numcols))
             stdscr.addstr(numlines-2, 0, 'n ans, q quit'.center(numcols))
             keyin = stdscr.getkey()
@@ -113,21 +115,23 @@ def main(scr):
 #            for i in range(int((numcols-len_string)/2+1)): string = string + u'\u2001'
 #    return string
 
-
-def get_rand_card():
-	try:
-		if sys.argv[1] == 'all':
-			rand_chap= random.randint(0,len(dictionary)-1)
-			rand_card = random.randint(0,len(dictionary[rand_chap])-1)
-			return (dictionary[rand_chap])[rand_card]
-		else:
-			chap = int(sys.argv[1])-1
-			rand_card = random.randint(0,len(dictionary[chap])-1)
-			return (dictionary[chap])[rand_card]
-	except:
-		usage()
-		os.system('stty echo')
-		sys.exit(2)
+def get_rand_card(deck):
+	if len(deck) == 0:
+		try:
+		    if sys.argv[1] == 'all':
+			    for d in dictionary:
+				    deck += d
+		    else:
+			    deck = list(dictionary[int(sys.argv[1])-1])
+		except:
+			usage()
+			sys.exit(2)
+		
+	idx = random.randint(0,(len(deck))-1)
+	card = deck[idx]
+	deck.remove(card)
+	deck.insert(0,card)
+	return deck
         
 def usage():
 	stdscr.addstr(0,0,'Usage: flashcardsKtoE.py CHAPTER# [m(obile)]')
