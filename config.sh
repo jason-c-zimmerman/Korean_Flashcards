@@ -19,6 +19,12 @@ then
 	$pkgman install python
 fi
 
+pip=`which pip`
+if [ "$pip" = "" ] 
+then
+	$pkgman install pip
+fi
+
 if [ $SHELL = "/data/data/com.termux/files/usr/bin/bash" ] 
 then
 	pkg install play-audio
